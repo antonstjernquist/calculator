@@ -1,2 +1,4 @@
-# calculator
-En kalkylator gjord med hjälp av Vue
+# Calculator
+
+
+En relativt simpel kalkylator gjord med hjälp av Vue
