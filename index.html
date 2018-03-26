@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Charset and viewport -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vue | Calculator</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
+    <link href="https://cdn.materialdesignicons.com/2.2.43/css/materialdesignicons.min.css" rel="stylesheet">
+
+    <!-- Development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="main.js"></script>
+
+  </head>
+  <body>
+    <div id="vue-calculator">
+      <div class="calculatorWrapper">
+
+        <div class="header">
+          <h4> {{title}}</h4><i tooltip="Vue JS" class="mdi mdi-vuejs"></i>
+        </div>
+
+        <div class="output">
+          <span class="output"> {{output}} </span>
+          <span v-show="displayTemp" class="tempanswer"> {{tempanswer}} </span>
+        </div>
+        <div class="buttonAndHistoryWrapper">
+          <div class="buttons">
+            <div class="col-one column">
+              <button @click="addToArray($event, '√')" v-bind:class="{ disabledButton: squareActive }">
+                <i class="mdi mdi-square-root"></i>
+              </button>
+              <button @click="clearOutput" class="button-c">
+                <span>C</span>
+              </button>
+              <button @click="addToArray" class="button-7">
+                <span>7</span>
+              </button>
+              <button @click="addToArray" class="button-4">
+                <span>4</span>
+              </button>
+              <button @click="addToArray" class="button-1">
+                <span>1</span>
+              </button>
+              <button @click="addToArray" class="button-%">
+                <span>%</span>
+              </button>
+            </div>
+            <div class="col-two column">
+              <button @click="addToArray($event, '√')" v-bind:class="{ disabledButton: squareActive }">
+                <i class="mdi mdi-square-root"></i>
+              </button>
+              <button @click="addToArray($event, '/')" class="button-divide">
+                <i class="mdi mdi-division"></i>
+              </button>
+              <button @click="addToArray" class="button-8">
+                <span>8</span>
+              </button>
+              <button @click="addToArray" class="button-5">
+                <span>5</span>
+              </button>
+              <button @click="addToArray" class="button-2">
+                <span>2</span>
+              </button>
+              <button @click="addToArray" class="button-0">
+                <span>0</span>
+              </button>
+            </div>
+            <div class="col-three column">
+              <button @click="addToArray($event, '√')" v-bind:class="{ disabledButton: squareActive }">
+                <i class="mdi mdi-square-root"></i>
+              </button>
+              <button @click="addToArray($event, '*')" class="button-multiply">
+                <i class="mdi mdi-multiplication"></i>
+              </button>
+              <button @click="addToArray" class="button-9">
+                <span>9</span>
+              </button>
+              <button @click="addToArray" class="button-6">
+                <span>6</span>
+              </button>
+              <button @click="addToArray" class="button-3">
+                <span>3</span>
+              </button>
+              <button @click="addToArray" class="button-comma">
+                <span>,</span>
+              </button>
+            </div>
+            <div class="col-four column">
+              <button @click="historyDisplay = !historyDisplay" v-bind:disabled="historyActive" v-bind:class="{ disabledButton: historyActive }">
+                <i class="mdi mdi-history"></i>
+              </button>
+              <button @click="backspace" v-bind:class="{ disabledButton: backspaceActive }">
+                <i class="mdi mdi-backspace"></i>
+              </button>
+              <button @click="addToArray($event, '-')" class="button-minus">
+                <i class="mdi mdi-minus"></i>
+              </button>
+              <button @click="addToArray($event, '+')" class="button-plus">
+                <i class="mdi mdi-plus"></i>
+              </button>
+              <button @click="calculate($event, 'realOutput')" v-bind:class="{ 'button-equal': true, disabledButton: calculateActive }">
+                <span>=</span>
+              </button>
+            </div>
+          </div>
+
+          <div v-show="!historyDisplay" class="history">
+            <div class="header">
+              <h4>History</h4> <i class="mdi mdi-history"></i>
+            </div>
+            <div class="historyList">
+              <div v-for="historyitem in historyArray">
+                {{historyitem[0]}} = {{historyitem[1]}}
+              <div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 100;
+}
+
+#vue-calculator > div {
+  background-color: #DDD;
+  max-width: 380px;
+}
+
+/* Header CSS */
+div.header, .history > div.header {
+  color: #fafafa;
+  background-color: #343434;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5em;
+}
+div.header > i {
+  margin: 3px 0px;
+}
+
+/* Output CSS */
+div.output {
+  color: #232323;
+  background-color: #ddd;
+  padding: 15px;
+  min-height: 100px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+div.output > span.output {
+  font-size: 1.8em;
+  margin-bottom: 3px;
+}
+div.output > span.tempanswer {
+  color: #4e4e4e;
+}
+
+/* Button and history wrapper */
+div.buttonAndHistoryWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Buttons CSS */
+
+div.buttons {
+  height: 380px;
+  display: flex;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+div.buttons > div > button {
+  color: #343434;
+  background-color: #adadad;
+  display: inline-block;
+  outline: none;
+  border: none;
+  flex: 1;
+  background-color: #DDD;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  font-size: 1.5em;
+}
+div.buttons > div > button.disabledButton {
+  color: #c6c6c6 !important;
+  cursor: not-allowed !important;
+  background-color: #eee !important;
+}
+
+/* Buttons */
+div.buttons > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Default colors */
+div.buttons > div.column > button:nth-child(2), div.buttons > div:last-child > button {
+  color: #1e80ff;
+  background-color: #eee;
+}
+div.buttons > div > div:first-child {
+  color: #1e80ff;
+  background-color: #eee;
+}
+/* Hover */
+div.buttons > div.column > button:hover, div.buttons > div.column > button:nth-child(2):hover, div.buttons > div.column:last-child > button:hover {
+  background-color: #1e80ff;
+  cursor: pointer;
+  color: #fafafa;
+}
+
+div.buttons > div > button.button-equal {
+  background-color: #68a6f8;
+  flex: 2;
+  color: #fff;
+}
+
+/* History CSS */
+
+div.historyList > div:nth-child(odd) {
+  background-color: #ddd;
+  padding: 15px;
+  color: #3c3c3c;
+}
+div.historyList > div:nth-child(even) {
+  background-color: #d5d5d5;
+  padding: 15px;
+  color: #3c3c3c;
+}
+
+@media screen and (min-width: 380px){
+
+  #vue-calculator > div {
+      margin: 50px auto;
+  }
+}
