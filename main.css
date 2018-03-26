@@ -8,6 +8,7 @@
 h4 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 100;
+  flex: 2;
 }
 
 #vue-calculator > div {
@@ -25,7 +26,8 @@ div.header, .history > div.header {
   font-size: 1.5em;
 }
 div.header > i {
-  margin: 3px 0px;
+  cursor: pointer;
+  margin: 2px;
 }
 
 /* Output CSS */
@@ -91,7 +93,7 @@ div.buttons > div {
 }
 
 /* Default colors */
-div.buttons > div.column > button:nth-child(2), div.buttons > div:last-child > button {
+div.buttons > div.column > button:nth-child(2), div.buttons > div.column > button:first-child, div.buttons > div:last-child > button {
   color: #1e80ff;
   background-color: #eee;
 }

@@ -39,7 +39,7 @@ window.onload = function(){
         }
 
         /* If it's the square root, we display it instantly */
-        if(type == '√'){
+        if(type == '√' || type == 'x²'){
           this.calculate(event, 'realOutput');
         } else {
           this.calculate(event, 'temp');
@@ -90,6 +90,7 @@ window.onload = function(){
 
         /* Now we have the correct numbersArray possibly? Lets calculate everything */
         let prevSeparator;
+        let beforecalc;
         for(let value of numbersArray){
 
           /* If value is a separator, set it here */
@@ -108,8 +109,9 @@ window.onload = function(){
           }
 
           /* If the prevSeparator is defined, calculate this value based on it*/
-          if(prevSeparator){
 
+          if(prevSeparator){
+            beforecalc = total;
             if(prevSeparator == '+'){
               total += value-0;
             } else if(prevSeparator == '-'){
@@ -122,6 +124,8 @@ window.onload = function(){
               total /= 100;
             } else if(prevSeparator == '√'){
               total = Math.sqrt(total);
+            } else if(prevSeparator == 'x²'){
+              total *= total;
             }
             prevSeparator = '';
           }
@@ -137,7 +141,7 @@ window.onload = function(){
         if(outputArea == 'temp'){
           if(this.displayTemp){
             if(total == Infinity){
-              this.tempanswer = '';
+              this.tempanswer = beforecalc;
             } else {
               this.tempanswer = total;
             }
@@ -201,6 +205,13 @@ window.onload = function(){
             this.calculate(event, 'temp');
           }
         }
+      }, removeHistory: function(event){
+        this.historyArray.length = 0;
+        this.historyActive = true;
+        this.historyDisplay = true;
+        this.historyDisplayOnce = false;
+      }, relocate: function(url){
+        window.location.assign(url);
       }
     }
   })

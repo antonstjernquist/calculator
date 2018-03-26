@@ -23,7 +23,7 @@
       <div class="calculatorWrapper">
 
         <div class="header">
-          <h4> {{title}}</h4><i tooltip="Vue JS" class="mdi mdi-vuejs"></i>
+          <h4> {{title}}</h4><i @click="relocate('https://vuejs.org/')" tooltip="Vue JS" class="mdi mdi-vuejs"></i>
         </div>
 
         <div class="output">
@@ -53,8 +53,8 @@
               </button>
             </div>
             <div class="col-two column">
-              <button @click="addToArray($event, '√')" v-bind:class="{ disabledButton: squareActive }">
-                <i class="mdi mdi-square-root"></i>
+              <button @click="addToArray($event, 'x²')" v-bind:class="{ disabledButton: squareActive }">
+                <i class="mdi mdi-format-superscript"></i>
               </button>
               <button @click="addToArray($event, '/')" class="button-divide">
                 <i class="mdi mdi-division"></i>
@@ -113,7 +113,7 @@
 
           <div v-show="!historyDisplay" class="history">
             <div class="header">
-              <h4>History</h4> <i class="mdi mdi-history"></i>
+              <h4>History</h4> <i @click="removeHistory" class="mdi mdi-delete"></i>
             </div>
             <div class="historyList">
               <div v-for="historyitem in historyArray">
