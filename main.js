@@ -14,10 +14,15 @@ window.onload = function(){
       historyActive: true,
       historyDisplay: true,
       historyDisplayOnce: false,
-      historyArray: []
+      historyArray: [],
+      resetCalc: false
     },
     methods: {
       addToArray: function(event, type){
+        if(this.resetCalc){
+          this.output = '';
+          this.resetCalc = false;
+        }
         this.backspaceActive = false;
         if(type){
 
@@ -60,6 +65,8 @@ window.onload = function(){
         let prevArray = [];
         let numbersArray = [];
         let prev;
+
+        /* Create the numbers and add them to the numbersArray */
         for(let val of this.calculationsArray){
 
           /* Räkna ut och dela upp arrayen. Lägg sedan korrekt värden i en ny array */
@@ -88,12 +95,19 @@ window.onload = function(){
         console.log('numbersArray', numbersArray);
 
 
-        /* Now we have the correct numbersArray possibly? Lets calculate everything */
+        /* Now we have the correct numbersArray. Lets calculate everything */
         let prevSeparator;
         let beforecalc;
-        for(let value of numbersArray){
 
-          /* If value is a separator, set it here */
+        /* Start by calculating Multiplication and division */
+        numbersArray = calcMD(numbersArray);
+        /* Calculations */
+        for(let i = 0 ; i <= numbersArray.length-1; i++){
+
+          /* Set the value here */
+          let value = numbersArray[i];
+
+          /* If value is a separator, set it in prevSeparator */
           if(isNaN(value)){
             this.displayTemp = true;
             this.calculateActive = false;
@@ -109,7 +123,6 @@ window.onload = function(){
           }
 
           /* If the prevSeparator is defined, calculate this value based on it*/
-
           if(prevSeparator){
             beforecalc = total;
             if(prevSeparator == '+'){
@@ -129,19 +142,27 @@ window.onload = function(){
             }
             prevSeparator = '';
           }
-
         }
+
+        /* Set prevValue after calculations */
         console.log('Total is: ', total);
 
         /* If the total is positive activate square root */
         if(total > 0){
           this.squareActive = false;
         }
+
         /* Set the correct value in our data object */
         if(outputArea == 'temp'){
           if(this.displayTemp){
             if(total == Infinity){
               this.tempanswer = beforecalc;
+            } else if (total == 0){
+                if(this.calculationsArray[this.calculationsArray.length-1] == '*'){
+                  this.tempanswer = beforecalc;
+                } else {
+                  this.tempanswer = total;
+                }
             } else {
               this.tempanswer = total;
             }
@@ -154,6 +175,9 @@ window.onload = function(){
           console.log(this.historyArray);
           /* Set the output answer */
           this.output = total;
+
+          /* Reset the calc */
+          this.resetCalc = true;
 
           /* Hide tempanswer */
           this.displayTemp = false;
@@ -175,11 +199,11 @@ window.onload = function(){
 
           /* Empty calculationsArray and add this value instead */
           this.calculationsArray.length = 0;
-          this.calculationsArray.push(total);
+          //this.calculationsArray.push(total);
 
           /* Empty numbersArray and add this value instead */
           numbersArray.length = 0;
-          numbersArray.push(total);
+          //numbersArray.push(total);
         }
       },
       backspace: function(event){
@@ -217,8 +241,54 @@ window.onload = function(){
   })
 
 
-
-
-
   /* End of onload */
+}
+
+var multiplication = function(a, b){
+    return a * b;
+}
+var division = function(a, b){
+    return a / b;
+}
+
+function calcMD(numbersArray){
+
+  let prevSeparator;
+  let prevValue;
+  let calculatedArray = [];
+  for(let i = 0; i <= numbersArray.length - 1; i++){
+    let value = numbersArray[i];
+    calculatedArray.push(value);
+
+    if(isNaN(value)){
+      if(value == '*'){
+        prevSeparator = multiplication;
+      } else if(value == '/'){
+        prevSeparator = division;
+      }
+      continue;
+    }
+
+    /* If previous separator exists */
+    if(prevSeparator && value && prevValue){
+        console.log('previous value is: ' + prevValue);
+        console.log('separator is: ' + prevSeparator);
+        console.log('Value is: ' + value);
+        calculatedArray.splice(i-2,2);
+        calculatedArray[i-2] = 0;
+        calculatedArray[i-1] = '+';
+        calculatedArray[i] = prevSeparator(prevValue, value);
+        //numbersArray.push(prevSeparator(prevValue, value));
+        console.log('We are at index: '+ i);
+        console.log('Answer is: ',prevSeparator(prevValue, value));
+        console.log('numbersArray is: ', numbersArray);
+        console.log('calculatedArray is:', calculatedArray);
+        prevValue = prevSeparator(prevValue, value);
+        prevSeparator = '';
+    } else {
+      prevValue = value;
+    }
+
+  }
+  return calculatedArray;
 }
